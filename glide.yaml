@@ -1,0 +1,6 @@
+package: github.com/jannik-kramer/drone-digitalocean
+import:
+- package: github.com/digitalocean/godo
+- package: github.com/joho/godotenv
+- package: github.com/urfave/cli
+- package: golang.org/x/oauth2
