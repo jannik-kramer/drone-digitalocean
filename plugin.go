@@ -22,8 +22,8 @@ type (
 		Pat          string
 		SourcePath   string
 		TargetPath   string
-		PreSync      string
-		PostSync     string
+		PreSync      []string
+		PostSync     []string
 	}
 
 	Plugin struct {
@@ -226,6 +226,8 @@ func (p *Plugin) Exec() error {
 	}
 
 	fmt.Println(p.Hosts)
+
+	fmt.Println("pre sync", p.Config.PreSync)
 
 	// TODO: pre sync script
 

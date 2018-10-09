@@ -106,17 +106,15 @@ func main() {
 			EnvVar: "PLUGIN_TARGET",
 			Destination: &plugin.Config.TargetPath,
 		},
-		cli.StringFlag{
+		cli.StringSliceFlag{
 			Name:   "pre-sync",
-			Usage:  "script to run before sync",
+			Usage:  "commands to run before sync",
 			EnvVar: "PLUGIN_PRE_SYNC",
-			Destination: &plugin.Config.PreSync,
 		},
-		cli.StringFlag{
+		cli.StringSliceFlag{
 			Name:   "post-sync",
-			Usage:  "script to run after sync",
+			Usage:  "commands to run after sync",
 			EnvVar: "PLUGIN_POST_SYNC",
-			Destination: &plugin.Config.PostSync,
 		},
 	}
 
@@ -128,6 +126,9 @@ func main() {
 
 // this runs due to "app.Action = run" in main()
 func run(c *cli.Context) error {
+	plugin.Config.PreSync = c.StringSlice("pre-sync")
+	plugin.Config.PostSync = c.StringSlice("post-sync")
+
 	plugin.Config.KeyPath = "id_sha"
 
 	if err := plugin.Exec(); err != nil {
