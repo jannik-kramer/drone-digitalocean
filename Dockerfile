@@ -13,14 +13,14 @@ WORKDIR /go/src/drone-digitalocean
 RUN glide install
 
 # build
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o drone-digitalocean .
 
 # second stage
 FROM scratch
 
 # copy binary
-COPY --from=builder /go/src/drone-digitalocean /app/
+ADD --from=builder /go/src/drone-digitalocean /app/
 
 # set entrypoint
 WORKDIR /app
-CMD ["./main"]
+ENTRYPOINT ["/app/drone-digitalocean"]
