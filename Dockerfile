@@ -19,7 +19,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflag
 FROM scratch
 
 # copy binary
-ADD --from=builder /go/src/drone-digitalocean /app/
+COPY --from=builder /go/src/drone-digitalocean /app/
 
 # set entrypoint
 WORKDIR /app
