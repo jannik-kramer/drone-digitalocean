@@ -23,4 +23,4 @@ COPY --from=builder /go/src/drone-digitalocean /app/
 
 # set entrypoint
 WORKDIR /app
-CMD ["./app/main"]
+CMD ["./main"]
