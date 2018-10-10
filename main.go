@@ -43,7 +43,7 @@ func main() {
 		cli.StringFlag{
 			Name:   "loadbalancer,b",
 			Usage:  "loadbalancer to deploy to",
-			EnvVar: "PLUGIN_LOADBALANCER",
+			EnvVar: "PLUGIN_LOADBALANCER,LOADBALANCER",
 			Destination: &plugin.Config.Loadbalancer,
 		},
 		cli.StringFlag{
@@ -126,6 +126,10 @@ func main() {
 
 // this runs due to "app.Action = run" in main()
 func run(c *cli.Context) error {
+	for _, pair := range os.Environ() {
+		fmt.Println(pair)
+	}
+
 	plugin.Config.PreSync = c.StringSlice("pre-sync")
 	plugin.Config.PostSync = c.StringSlice("post-sync")
 
