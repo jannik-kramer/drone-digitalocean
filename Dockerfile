@@ -5,7 +5,7 @@ FROM golang:latest as builder
 RUN go get github.com/Masterminds/glide
 
 # create a working directory
-RUN mkdir -p /go/src/drone-digitalocean
+RUN mkdir -p /go/src/drone-digitalocean/bin
 ADD . /go/src/drone-digitalocean
 WORKDIR /go/src/drone-digitalocean
 
@@ -13,13 +13,13 @@ WORKDIR /go/src/drone-digitalocean
 RUN glide install
 
 # build
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o drone-digitalocean .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o bin/drone-digitalocean .
 
 # second stage
 FROM scratch
 
 # copy binary
-COPY --from=builder /go/src/drone-digitalocean /app/
+COPY --from=builder /go/src/drone-digitalocean/bin /app/
 
 # set entrypoint
 WORKDIR /app
